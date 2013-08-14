@@ -28,7 +28,7 @@
  * [s/S] reset range for monitor/s
  *
  * [F1] toggle meters display
- * [F2] toggle monitos display
+ * [F2] toggle monitors display
  * [h] toggle hex/decimal value display
  *
  * 2010-06-19 Sat - subpixel
