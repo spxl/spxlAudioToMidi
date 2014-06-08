@@ -1,0 +1,156 @@
+<html>
+<head>
+<title>spxlAudioToMidi</title>
+<link rel="stylesheet" href="../../spxl.css" type="text/css">
+<style type="text/css">
+.screenshot {
+	display: inline;
+	float: left;
+	width: 140px;
+	margin-right: 1em;
+	margin-bottom: 1em;
+	font-size: 0.75em;
+}
+.nogap {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.nogaptop {
+	margin-top: 0px;
+}
+.nogapbot {
+	margin-bottom: 0px;
+}
+.clear { clear: both; }
+</style>
+</head>
+<body>
+
+<div id="spxl_nav"><a class="spxl_site_ident" href="http://subpixels.com/">subpixels.com</a> | <a class="spxl_site_ident" href="http://spxl.tv">SPXL.TV</a> &mdash;  <a href="blog">blog</a> | <a href="contact">contact</a> &mdash; <a href="gallery">gallery</a> | <a href="video">video</a> &mdash; <a href="flash">flash</a> | <a href="http://subpixels.com/blog/category/computing/programming/processing/">processing</a> &mdash; <a href="http://myspace.com/subpixel">myspace</a> | <a href="http://facebook.com/subpixel">facebook</a></div>
+
+<h1 class="nogapbot">spxlAudioToMidi</h1>
+<p class="nogap">by subpixel, <a href="http://subpixels.com" target="_blank">subpixels.com</a></p>
+
+<div id="spxl_page_body">
+
+<h2 class="nogaptop">Description</h2>
+
+<p>A small application made with <a href="http://processing.org" target="_blank">Processing</a> to produce MIDI control messages from a live audio feed. Auto-levelling frequency band meters are used to obtain "peak" output values across the entire audio spectrum analysed (whereas it is usual to have strong bass response with weaker treble response), and easing is applied to make the levels less erratic. 10 separate monitor outputs are supplied, where each monitor is attached to one of the frequency band meters and that meter's output is scaled to the particular output range for the monitor, allowing for a reduced final output range as well as inverted ranges. Controls are provided to select the MIDI output device and the MIDI channel to use, as well as for selecting which monitors are connected to which meters and the monitor output ranges.</p>
+
+<p>This app has been used to control the VJ applications <a href="http://resolume.com">Resolume</a> and <a href="http://neonv2.com" target="_blank">Neon v2</a>, allowing simultaneous control from an external MIDI controller on the same channel (using <a href="http://midiox.com" target="_blank">MIDI-OX</a> and MIDI Yoke for routing).</p>
+
+<h2>Download</h2>
+
+<p>2014-06-08 v08: <a href="spxlAudioToMidi08-140608a-source.zip">spxlAudioToMidi08-140608a-source.zip</a> (16kB) - Source code, Win32 and Win64 application export</p>
+
+<p>v08 is developed and tested with Processing 2.0.3 under Windows 7 Professional (64-bit)</p>
+
+<ul>
+<li>2014-06-08 v08: <a href="spxlAudioToMidi08-140608a-win32-64.zip">spxlAudioToMidi08-140608a-win32-64.zip</a> (10.6MB) - Source code, Win32 and Win64 application export</li>
+</ul>
+
+<p>A copy of my sketchbook/libraries/promidi folder can be had here: <a href="http://subpixels.com/processing/libraries/promidi.zip">promidi.zip</a> (1MB).</p>
+
+<h3>Older version(s)</h3>
+<p>2010-06-25 v04: <a href="v04/spxlAudioToMidi04.zip">spxlAudioToMidi04.zip</a> (8,588 bytes) - Source code</p>
+
+<p>v04 was developed and tested with Processing 1.1 under Windows 7 Professional (64-bit)</p>
+
+<ul>
+<li><a href="v04/spxlAudioToMidi04.windows.zip">spxlAudioToMidi04.windows.zip</a> (584,809 bytes) - Windows executable</li>
+<li><a href="v04/spxlAudioToMidi04.macosx.zip">spxlAudioToMidi04.macosx.zip</a> (613,978 bytes) - Mac executable</li>
+<li><a href="v04/spxlAudioToMidi04.linux.zip">spxlAudioToMidi04.linux.zip</a> (578,305 bytes) - Linux executable</li>
+</ul>
+
+<h2>Demo Videos</h2>
+
+<ul>
+<li><a href="http://www.youtube.com/watch?v=UyYEZU3jLro" target="_blank">spxlAudioLevelVideoPosition | Sat 19 Jun 2010</a> (YouTube) - no Midi, but this is the precursor with autolevelling audio meters</li>
+<li><a href="http://www.youtube.com/watch?v=dBy5TzpHZh4" target="_blank">spxlAudioToMidi demo | Wed 23 Jun 2010 </a> (YouTube)</li>
+<li><a href="http://www.youtube.com/watch?v=GT88rWJ4ZD0" target="_blank">spxlAudioToMidi demo | EveryOne at 202 Broadway | Fri 25 Jun 2010 </a> (YouTube)
+	<ul>
+	<li><a href="video/100625_spxlAudioToMidi04_demo.xvid.avi">100625_spxlAudioToMidi04_demo.xvid.avi</a> (68.4MiB download)</li>
+	</ul>
+</li>
+</ul>
+
+<h2>Operation</h2>
+
+<p><strong>Note: this guide is not current for v08; the operation is pretty straightforward, except for mystery keyboard commands. See the main .pde file for more up-to-date information, or check the code! Special new keys: F3 = sample audio from "Microphone" mixer. F4 = sample audio from "Stereo Mix" mixer. Can only be used once each time the app is run due to an unsolved problem. Also, choose the MIDI channel (the numbers at the top left of the window) before selecting the MIDI device, since there is some separate problem with re-opening the MIDI devices.</strong></p>
+
+<p>The text at the top of the window controls the MIDI output. The left column of 30 bars are audio meters; each meter representing an average for a frequency band produced by FFT analysis with the low frequencies at the top of the display and the high frequencies at the bottom of the display. The meters are auto-levelling and provide normalised output values between 0 and 1 (inclusive). The right column of 10 bars are meter monitors, with each one connected to a particular meter. A monitor's output value is determiend by scaling the input meter value over the monitor's output range between 0 and 127 (inclusive); the lower and upper limits of each range can be adjusted, including to scale the meter input inversely, and the meter it is connected to (thus the frequency band it monitors) can be changed. If a MIDI output device is selected, each time a monitor output value changes, the value is emitted as a MIDI control message on the selected output channel. The control number is in the range 1 to 10, with the top monitor being control 1 and the bottom one being control 10.</p>
+
+<h3>Selecting MIDI output device</h3>
+<p>Click on the "SELECT OUTPUT" text to pop up the "SELECT DEVICE:" menu. Click a displayed device to select. Subsequently, clicking a displayed device name presents the "SELECT DEVICE:" menu again, and clicking the displayed channel number presents a "SELECT CHANNEL:" menu with channels 1 to 16.</p>
+
+<h3>Adjust monitor output ranges</h3>
+<p>Each monitor ouutputs values in the range 0 to 127 (inclusive) by default. The "minimum" and "maximum" limits can be adjusted by clicking (and dragging) the monitor output bar. Clicking in the top 3/4 of the bar adjusts the maximum; clicking in the top 1/4 of the bar adjusts the minimum. When dragging, if the mouse is dragged above or below the bar, the limit being dragged (min or max) snaps back to the previous value. Right-click the bar to reset to the default full range (0 to 127).</p>
+
+<h3>Changing monitor links</h3>
+<p>When the mouse is just off the left edge of a monitor bar the link to the associated meter is hilighted and "Drag to meter" is displayed. Click and drag the mouse pointer, releasing over to the desired meter; releasing when not over a meter leaves the link as it was previously. Right-clicking when "Drag to meter" is shown resets the link to the meter assigned by default when the application was started.
+
+<h3>Keyboard controls</h3>
+<p>Below, the "selected monitor" is the monitor that the mouse is over.</p>
+<dl>
+<dt>Space / P</dt> <dd>[P]ause (and unpause)</dd>
+<dt>M</dt> <dd>[M]ute meter inputs</dd>
+<dt>E</dt> <dd>Toggle [E]asing of meter values (on by default)</dd>
+<dt>H</dt> <dd>Toggle display of values in [H]exadecimal</dd>
+<dt>R</dt> <dd>[R]andom range (sets min and max output values) for selected monitor; Shift+R to randomise all ranges</dd>
+<dt>F</dt> <dd>[F]lip range (swap min and max output values) for selected monitor; Shift+F to flip all ranges</dd>
+<dt>V</dt> <dd>in[V]ert range (sets min to 127-min, max to 127-max) for selected monitor; Shift+V to invert all ranges</dd>
+<dt>S</dt> <dd>re[S]et range to default (sets min to 0, max to 127) for selected monitor; Shift+S to reset all ranges</dd>
+<dt>Q</dt> <dd>link selected monitor to random meter; Shift+Q to randomise all links</dd>
+<dt>A</dt> <dd>reset link to default meter; Shift+A to reset all links to default meters</dd>
+<dt>1234567890</dt> <dd>Set MIDI output channel (channels 1 to 10 only, 0 for 10)</dd>
+<dt>!@#$%^&amp;*()</dt> <dd>Set the the MIDI output device (as per the order shown in the menu when clicked)</dd>
+<dt>F1</dt> <dd>Toggle display of meters</dd>
+<dt>F2</dt> <dd>Toggle display of monitors</dd>
+</dl>
+
+
+<h2>Screenshots</h2>
+
+<div class="screenshot"><img src="capture/spxlAudioToMidi04_29062010_111258.jpg"><br/>
+Default state</div>
+
+<div class="screenshot"><img src="capture/spxlAudioToMidi04_29062010_111407.jpg"><br/>
+Select MIDI device</div>
+
+<div class="screenshot"><img src="capture/spxlAudioToMidi04_29062010_111422.jpg"><br/>
+Link to meter part 1</div>
+
+<div class="screenshot"><img src="capture/spxlAudioToMidi04_29062010_111431.jpg"><br/>
+Link to meter part 2</div>
+
+<div class="screenshot"><img src="capture/spxlAudioToMidi04_29062010_111458.jpg"><br/>
+Hover to show value</div>
+
+<div class="screenshot clear"><img src="capture/spxlAudioToMidi04_29062010_111524.jpg"><br/>
+Set max output<br/>Click (and drag)</div>
+
+<div class="screenshot"><img src="capture/spxlAudioToMidi04_29062010_111534.jpg"><br/>
+Set min output<br/>Click (and drag)</div>
+
+<div class="screenshot"><img src="capture/spxlAudioToMidi04_29062010_111611.jpg"><br/>
+Random links,<br>random output ranges</div>
+
+<div class="screenshot"><img src="capture/spxlAudioToMidi04_29062010_111628.jpg"><br/>
+Select MIDI channel</div>
+
+<div class="screenshot"><img src="capture/spxlAudioToMidi04_29062010_111711.jpg"><br/>
+Pause + mute</div>
+
+</div> <!-- end spxl_page_body -->
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try{
+var pageTracker = _gat._getTracker("UA-4088745-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script></body>
+</html>
