@@ -178,19 +178,19 @@ public class MeterMonitor
     if (state == STATE_SET_MIN)
     {
       p5.fill(255);
-      text("Min: " + dispValue(controllerMinValue), x + textOffsetX, y + textOffsetY);
+      p5.text("Min: " + dispValue(controllerMinValue), x + textOffsetX, y + textOffsetY);
     }
     else if (state == STATE_SET_MAX)
     {
       p5.fill(255);
-      text("Max: " + dispValue(controllerMaxValue), x + textOffsetX, y + textOffsetY);
+      p5.text("Max: " + dispValue(controllerMaxValue), x + textOffsetX, y + textOffsetY);
     }
     else
     {
       if (mouseOver)
       {
         p5.fill(255);
-        text(controllerNumber + ": " + dispValue(value), x + textOffsetX, y + textOffsetY);
+        p5.text(controllerNumber + ": " + dispValue(value), x + textOffsetX, y + textOffsetY);
       }
       
       // (v09) Display extra info based on change/message
@@ -204,7 +204,7 @@ public class MeterMonitor
         }
         
         p5.fill(255, alpha);
-        text("\n" + displayInfoStr, x + textOffsetX, y + textOffsetY);
+        p5.text("\n" + displayInfoStr, x + textOffsetX, y + textOffsetY);
         
         displayInfoCounter--;
       }
@@ -218,7 +218,7 @@ public class MeterMonitor
       p5.ellipse(x, y + h / 2, 10, 10);
 
       p5.fill(255);
-      text("Drag to\nmeter", x + h / 4 + textOffsetX, y + textOffsetY);
+      p5.text("Drag to\nmeter", x + h / 4 + textOffsetX, y + textOffsetY);
     }
     
     // Show possible new connection (draw to mouse location)
