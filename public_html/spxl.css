@@ -1,0 +1,65 @@
+/* subpixels.com */
+
+body {
+	background-color: #000000;
+}
+
+body,td,th {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #EEEEEE;
+}
+
+a {
+	color: #999999;
+}
+
+a img {
+  border: none
+}
+
+#spxl_nav {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	margin: 0;
+	padding: 2px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	color: #999999;
+	background-color: #111111;
+}
+#spxl_nav a {
+	color: #999999;
+	text-decoration: none;
+}
+#spxl_nav a.spxl_site_ident {
+	color: #EE0000;
+	font-weight: bold;
+}
+#spxl_nav a:hover {
+	color: #FFFF00;
+	text-decoration: underline;
+}
+
+#spxl_page_body {
+	background-color: #330000;
+	position: relative;
+	left: 0em;
+	top: 1.5em;
+	padding: 0.5em;
+}
+
+#spxl_last_modified {
+	position: relative;
+	left: 0px;
+	top: 2.5em;
+	font-size: 0.75em;
+	color: #999999;
+	text-align: right;
+}
+#spxl_last_modified:before {
+	content: "Page last modified: "
+}
+
